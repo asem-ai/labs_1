@@ -74,3 +74,8 @@ def compress_text(text):
     return "".join(result)
 print(compress_text("aaBBcDDD"))
 
+#6 esep
+process = lambda s: [word for word in s.split() if len(word) >= 4 and not any(ch.isdigit() for ch in word) and len(set(word.lower())) == len(word)]
+text = "test hello world apple banana"
+print(process(text))
+
