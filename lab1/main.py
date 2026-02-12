@@ -50,3 +50,27 @@ process = lambda s: " ".join([word.lower() for word in s.split() if sum(1 for ch
 text = "Hello PyThon tEst world"
 print(process(text))
 
+#5 esep
+def compress_text(text):
+    if not text:
+        return ""
+    result=[]
+    current_char=text[0]
+    count=1
+    for i in range(1,len(text)):
+        if text[i].lower()==current_char.lower():
+            count+=1
+        else:
+            if count==1:
+                result.append(current_char)
+            else:
+                result.append(current_char+str(count))
+            current_char = text[i]
+            count=1
+    if count==1:
+        result.append(current_char)
+    else:
+        result.append(current_char+str(count))
+    return "".join(result)
+print(compress_text("aaBBcDDD"))
+
