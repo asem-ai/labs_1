@@ -45,3 +45,8 @@ def top_k_words(text, k):
 text = "hello world hello python world world"
 print(top_k_words(text, 2))
 
+#4 esep
+process = lambda s: " ".join([word.lower() for word in s.split() if sum(1 for ch in word if ch.isupper()) == 1 and not word[0].isupper() and not word[-1].isupper()])
+text = "Hello PyThon tEst world"
+print(process(text))
+
