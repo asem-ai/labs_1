@@ -31,3 +31,17 @@ text="hello 123 world test2 python code"
 result=process(text)
 print(result)
 
+#3 esep
+def top_k_words(text, k):
+    import string
+    text=text.lower()
+    for punct in string.punctuation:
+        text = text.replace(punct, "")
+    words = text.split()
+    freq = {}
+    for word in words:
+        sorted_items = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+        return [word for word, _ in sorted_items[:k]]
+text = "hello world hello python world world"
+print(top_k_words(text, 2))
+
