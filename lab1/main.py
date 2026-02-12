@@ -21,3 +21,13 @@ def analyze_text(text):
     return len(unique_vowels)," ".join(result_words)
 print(analyze_text("Madam, in Eden, I'm Adam."))
 
+#2 esep
+process=lambda text:" ".join([
+    word[::-1]
+    for word in text.split()
+    if not any(character.isdigit() for character in word) and len(word)%2==0
+])
+text="hello 123 world test2 python code"
+result=process(text)
+print(result)
+
