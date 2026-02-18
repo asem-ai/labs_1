@@ -104,3 +104,20 @@ vowel_consonant = lambda text: ' '.join(
 text = "apple car 123tree house"
 print(vowel_consonant(text))
 
+#9 esep
+def alternate_case_blocks(text, n):
+    text = text.replace(" ", "")
+    result = ""
+
+    for i in range(0, len(text), n):
+        block = text[i:i + n]
+        if (i // n) % 2 == 0:
+            result += block.upper()
+        else:
+            result += block.lower()
+
+    return result
+
+
+print(alternate_case_blocks("HelloWorldPython", 3))
+
