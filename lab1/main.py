@@ -94,3 +94,13 @@ def palindrome_words(text):
 text = "level madam hello civic world"
 print(palindrome_words(text))
 
+#8 esep
+vowel_consonant = lambda text: ' '.join(
+    'VOWEL' if word[0].lower() in 'aeiou' and not any(c.isdigit() for c in word)
+    else 'CONSONANT' if word[0].isalpha() and not any(c.isdigit() for c in word)
+    else word
+    for word in text.split()
+)
+text = "apple car 123tree house"
+print(vowel_consonant(text))
+
