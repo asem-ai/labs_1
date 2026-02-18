@@ -200,3 +200,33 @@ filter_vowel_words = lambda text: ', '.join(
 )
 text = "hello world python beauty queue"
 print(filter_vowel_words(text))
+
+#15 esep
+def word_pattern_sort(text):
+    punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    clean_text = text
+    for p in punctuation:
+        clean_text = clean_text.replace(p, ' ')
+
+    words = clean_text.split()
+    groups = {}
+    for word in words:
+        length = len(word)
+        if length not in groups:
+            groups[length] = []
+        groups[length].append(word)
+
+    def count_vowels(word):
+        return sum(1 for c in word.lower() if c in 'aeiou')
+
+    result = []
+    for length in sorted(groups.keys()):
+        sorted_group = sorted(groups[length],
+                              key=lambda w: (-count_vowels(w), w))
+        result.extend(sorted_group)
+
+    return result
+
+
+text = "hello world python code apple"
+print(word_pattern_sort(text))
