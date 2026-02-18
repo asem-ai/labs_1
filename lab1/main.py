@@ -160,3 +160,34 @@ special_words = lambda text: [
 ]
 text = "hello level world madam civic"
 print(special_words(text))
+#13 esep
+def replace_every_nth(text, n, char):
+    words = text.split()
+    short_word_indices = set()
+    current_pos = 0
+
+    for word in words:
+        word_len = len(word)
+        if word_len < 3:
+            for i in range(current_pos, current_pos + word_len):
+                short_word_indices.add(i)
+        current_pos += word_len + 1
+    result = ""
+    for i, ch in enumerate(text):
+        if (i + 1) % n == 0:
+            if ch == ' ':
+                result += ch
+            elif ch.isdigit():
+                result += ch
+            elif i in short_word_indices:
+                result += ch
+            else:
+                result += char
+        else:
+            result += ch
+
+    return result
+
+
+text = "hello world python code"
+print(replace_every_nth(text, 2, '*'))
