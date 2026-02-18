@@ -79,3 +79,18 @@ process = lambda s: [word for word in s.split() if len(word) >= 4 and not any(ch
 text = "test hello world apple banana"
 print(process(text))
 
+
+#7 esep
+def palindrome_words(text):
+    punctuation = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+    for p in punctuation:
+        text = text.replace(p, ' ')
+    words = text.split()
+    palindromes = set()
+    for word in words:
+        if len(word) >= 3 and word.lower() == word.lower()[::-1]:
+            palindromes.add(word.lower())
+    return sorted(palindromes, key=lambda x: (-len(x), x))
+text = "level madam hello civic world"
+print(palindrome_words(text))
+
