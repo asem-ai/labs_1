@@ -254,3 +254,13 @@ def transform_list(nums):
 
 nums = [-5, 4, 13, 7, 20, 11, 2]
 print(transform_list(nums))
+#17 esep
+filter_numbers = lambda nums: [
+    x ** 2
+    for x in nums
+    if (x % 3 == 0 or x % 5 == 0)
+    and x % 15 != 0
+    and len(str(abs(x))) % 2 != 0
+]
+nums = [3, 5, 15, 9, 10, 30, 25, 100, 7]
+print(filter_numbers(nums))
