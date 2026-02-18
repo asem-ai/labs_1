@@ -230,3 +230,27 @@ def word_pattern_sort(text):
 
 text = "hello world python code apple"
 print(word_pattern_sort(text))
+#16 esep
+def transform_list(nums):
+    result = []
+
+    for num in nums:
+        if num < 0:
+            continue
+        if num % 2 == 0:
+            result.append(num ** 2)
+        elif num > 10 and num % 2 != 0:
+            digit_sum = 0
+            n = num
+            while n > 0:
+                digit_sum += n % 10
+                n //= 10
+            result.append(digit_sum)
+        else:
+            result.append(num)
+
+    return result
+
+
+nums = [-5, 4, 13, 7, 20, 11, 2]
+print(transform_list(nums))
