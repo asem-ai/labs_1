@@ -191,3 +191,12 @@ def replace_every_nth(text, n, char):
 
 text = "hello world python code"
 print(replace_every_nth(text, 2, '*'))
+#14 esep
+filter_vowel_words = lambda text: ', '.join(
+    word
+    for word in text.split()
+    if len(set(word.lower())) > 3
+    and len(set(c for c in word.lower() if c in 'aeiou')) == len([c for c in word.lower() if c in 'aeiou'])
+)
+text = "hello world python beauty queue"
+print(filter_vowel_words(text))
