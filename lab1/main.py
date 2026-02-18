@@ -131,3 +131,32 @@ count_digit_words = lambda text: sum(
 text = "hello abc123 world test1234 123abc python3"
 print(count_digit_words(text))
 
+#11 esep
+def common_unique_chars(s1, s2):
+    s2_chars = set()
+    for char in s2:
+        s2_chars.add(char)
+    result = ""
+    seen = set()
+
+    for char in s1:
+        if char.isalpha():
+            if char in s2_chars and char not in seen:
+                result += char
+                seen.add(char)
+
+    return result
+s1 = "hello world 123"
+s2 = "world hello 456"
+print(common_unique_chars(s1, s2))
+
+#12 esep
+special_words = lambda text: [
+    word
+    for word in text.split()
+    if len(word) > 3
+    and word[0].lower() == word[-1].lower()
+    and word.lower() != word.lower()[::-1]
+]
+text = "hello level world madam civic"
+print(special_words(text))
