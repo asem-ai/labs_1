@@ -120,4 +120,14 @@ def alternate_case_blocks(text, n):
 
 
 print(alternate_case_blocks("HelloWorldPython", 3))
+#10 esep
+count_digit_words = lambda text: sum(
+    1 for word in text.split()
+    if any(c.isdigit() for c in word)
+    and not word[0].isdigit()
+    and len(word) >= 5
+)
+
+text = "hello abc123 world test1234 123abc python3"
+print(count_digit_words(text))
 
