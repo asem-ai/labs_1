@@ -264,3 +264,17 @@ filter_numbers = lambda nums: [
 ]
 nums = [3, 5, 15, 9, 10, 30, 25, 100, 7]
 print(filter_numbers(nums))
+#18 esep
+def flatten_and_filter(lst):
+    result = []
+    def extract_numbers(item):
+        if isinstance(item, (int, float)):
+            if item > 0 and item % 4 != 0 and item >= 10:
+                result.append(item)
+        elif isinstance(item, list):
+            for elem in item:
+                extract_numbers(elem)
+    extract_numbers(lst)
+    return sorted(result)
+data = [1, [-5, 12, [8, 15, [20, -3, 30]]], [4, 7], 25]
+print(flatten_and_filter(data))
