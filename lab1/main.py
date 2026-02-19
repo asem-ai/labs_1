@@ -278,3 +278,37 @@ def flatten_and_filter(lst):
     return sorted(result)
 data = [1, [-5, 12, [8, 15, [20, -3, 30]]], [4, 7], 25]
 print(flatten_and_filter(data))
+#19
+find_matching_even = lambda list1, list2: [
+    list1[i]
+    for i in range(min(len(list1), len(list2)))
+    if list1[i] == list2[i] and list1[i] % 2 == 0
+]
+a = [2, 3, 4, 5, 6]
+b = [2, 7, 4, 9, 6]
+print(find_matching_even(a, b))
+#20
+def max_subarray_sum(nums, k):
+    if len(nums) < k:
+        return None
+
+    max_sum = None
+    for i in range(len(nums) - k + 1):
+        subarray = nums[i:i + k]
+        valid = True
+        current_sum = 0
+
+        for num in subarray:
+            if num <= 0:
+                valid = False
+                break
+            current_sum += num
+        if valid:
+            if max_sum is None or current_sum > max_sum:
+                max_sum = current_sum
+
+    return max_sum
+
+
+nums = [1, 2, 3, 0, 4, 5, 6, -1, 2, 3]
+print(max_subarray_sum(nums, 3))
