@@ -287,7 +287,7 @@ find_matching_even = lambda list1, list2: [
 a = [2, 3, 4, 5, 6]
 b = [2, 7, 4, 9, 6]
 print(find_matching_even(a, b))
-#20
+#20 esep
 def max_subarray_sum(nums, k):
     if len(nums) < k:
         return None
@@ -312,3 +312,39 @@ def max_subarray_sum(nums, k):
 
 nums = [1, 2, 3, 0, 4, 5, 6, -1, 2, 3]
 print(max_subarray_sum(nums, 3))
+#21 esep
+filter_strings = lambda strings: [
+    s.upper()
+    for s in strings
+    if s.isalpha()
+    and len(s) > 4
+    and len(set(s.lower())) == len(s)
+]
+words = ["hello", "world", "python", "code", "abcde", "book", "house"]
+print(filter_strings(words))
+#19 esep
+find_matching_even = lambda list1, list2: [
+    list1[i]
+    for i in range(min(len(list1), len(list2)))
+    if list1[i] == list2[i] and list1[i] % 2 == 0
+]
+a = [2, 3, 4, 5, 6]
+b = [2, 7, 4, 9, 6]
+print(find_matching_even(a, b))
+#22 esep
+def group_by_parity_and_sort(nums):
+    evens = []
+    odds = []
+
+    for num in nums:
+        if num % 2 == 0:
+            evens.append(num)
+        else:
+            odds.append(num)
+    evens.sort()
+    odds.sort()
+    return evens + odds
+
+
+nums = [5, 2, 7, 4, 1, 8, 3, 6]
+print(group_by_parity_and_sort(nums))
