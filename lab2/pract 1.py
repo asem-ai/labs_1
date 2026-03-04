@@ -1,30 +1,37 @@
-import csv
 
-from lab2.tasks import departments, salaries
-
-file=open("employees.csv","w",encoding="utf-8")
-file.write("name,department,salary")
-file.write("Ali,IT,500000\n")
-file.write("Dana,HR,300000\n")
-file.write("Arman,IT,600000\n")
-file.write("Aruzhan,Marketing,400000\n")
-file.write("Dias,IT,450000\n")
-file.close()
-with open("employees.csv","r",encoding="utf-8") as f:
-    reader=csv.DictReader(f)
-    for row in reader:
-        names.append(row["name"])
-        departments.append(row["department"])
-        salaries.append(int(row["salary"]))
-total=0
-for s in salaries:
-    total+=s
-average=total/len(salaries)
-dept_salaries={}
-for i in range(len(departments)):
-    dept=departments[i]
-    salary=salaries[i]
-    if dept not in dept_salaries:
-        dept_salaries[dept]=[]
-    else:
-        dept_salaries[dept].append(salary)
+f=open("shop_logs.txt","r",encoding="utf-8")
+unique_users=set()
+total_buys=0
+total_sum=0
+user_spending={}
+for line in f:
+    parts=line.strip().split(";")
+    user_id=parts[1]
+    action=parts[2]
+    unique_users.add(user_id)
+    if action=="BUY":
+        amount=int(parts[3])
+        total_buys+=1
+        total_sum+=amount
+        if user_id not in user_spending:
+            user_spending[user_id]=amount
+        else:
+            user_spending[user_id]+=amount
+max_user=""
+max_spent=0
+for user in user_spending:
+    if user_spending[user]>max_spent:
+        max_user=user
+        max_spent=user_spending[user]
+if total_buys>0:
+    average_check=total_sum/total_buys
+else:
+    average_check=0
+report=open("report.txt","w", encoding="utf-8")
+report.write("Уникальных пользывателей: " +str(len(unique_users))+"\n")
+report.write("Всего покупок: " +str(total_buys)+"\n")
+report.write("Общая сумма: " + str(total_sum)+"\n")
+report.write("Самый активный покупатель :" +max_user+"\n")
+report.write("Средний чек: " +str(average_check) + "\n")
+report.close()
+print("Отчет прошел отлично")

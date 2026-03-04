@@ -1,4 +1,4 @@
-f=open("shop_logs.txt","r",encoding="utf-8")#1
+f=open("shop_logs.txt","r", encoding="utf-8")
 unique_users = set()
 total_buys = 0
 total_sum = 0
@@ -44,7 +44,6 @@ file.write("Arman,IT,600000\n")
 file.write("Aruzhan,Marketing,400000\n")
 file.write("Dias,IT,450000\n")
 file.close()
-print("1. employees.csv файлы жасалды!")
 
 names = []
 departments = []
@@ -59,15 +58,12 @@ for row in reader:
     salaries.append(int(row["salary"]))
 
 file.close()
-print("2. employees.csv файлы оқылды!")
 
 total = 0
 for s in salaries:
     total += s
 
 average = total / len(salaries)
-print("\n--- НӘТИЖЕЛЕР ---")
-print("Орташа жалақы:", round(average, 2))
 
 dept_salaries = {}
 
@@ -87,7 +83,6 @@ for dept, salary_list in dept_salaries.items():
         total += s
     avg = total / len(salary_list)
     dept_average[dept] = avg
-    print(f"{dept} бөлімінің орташасы: {round(avg, 2)}")
 
 best_dept = ""
 highest_avg = 0
@@ -95,7 +90,6 @@ for dept, avg in dept_average.items():
     if avg > highest_avg:
         highest_avg = avg
         best_dept = dept
-print("Ең жоғары орташа бөлім:", best_dept)
 
 max_salary = 0
 max_name = ""
@@ -103,13 +97,10 @@ for i in range(len(salaries)):
     if salaries[i] > max_salary:
         max_salary = salaries[i]
         max_name = names[i]
-print("Ең жоғары жалақы алатын:", max_name, "-", max_salary)
 
 high_employees = []
-print("\nОрташадан жоғары алатындар:")
 for i in range(len(salaries)):
     if salaries[i] > average:
-        print(" ", names[i], "-", salaries[i])
         high_employees.append([names[i], departments[i], salaries[i]])
 
 
@@ -118,7 +109,6 @@ file2.write("name,department,salary\n")
 for emp in high_employees:
     file2.write(f"{emp[0]},{emp[1]},{emp[2]}\n")
 file2.close()
-print("\n high_salary.csv файлы жасалды!")
 
 import json  #3
 with open("orders.json", "r", encoding="utf-8") as f:
