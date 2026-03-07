@@ -371,3 +371,51 @@ def longest_increasing_sublist(nums):
 
 nums = [1, 2, 3, 1, 2, 3, 4, 1, 2]
 print(longest_increasing_sublist(nums))
+
+# 25 esep
+product_of_positives = lambda d: {
+    key: eval('*'.join(str(x) for x in value if x > 0))
+    for key, value in d.items()
+    if any(x > 0 for x in value)
+}
+
+
+def product(nums):
+    result = 1
+    for x in nums:
+        result *= x
+    return result
+
+
+product_lambda = lambda d: {
+    key: product([x for x in value if x > 0])
+    for key, value in d.items()
+    if any(x > 0 for x in value)
+}
+
+def product_of_positives_explained(d):
+    result = {}
+
+    for key, value in d.items():
+        positives = []
+        for num in value:
+            if num > 0:
+                positives.append(num)
+        if positives:
+            prod = 1
+            for num in positives:
+                prod *= num
+            result[key] = prod
+
+    return result
+
+data = {
+    "a": [1, 2, 3, -4, 5],
+    "b": [-1, -2, -3, -4],
+    "c": [2, 4, 6, 8],
+    "d": [10, -20, 30, -40],
+    "e": [0, 1, 2, 3]
+}
+print(product_of_positives_explained(data))
+
+
