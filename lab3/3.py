@@ -69,3 +69,14 @@ def infinite_numbers():
 gen = infinite_numbers()
 for _ in range(15):
     print(next(gen))
+
+#10 esep
+def squares(n):
+    for i in range(1, n + 1):
+        sq = i ** 2
+        if sq % 2 == 0:
+            yield "чётный квадрат"
+        else:
+            yield sq
+for x in squares(5):
+    print(x)
