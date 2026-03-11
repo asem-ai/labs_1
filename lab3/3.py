@@ -31,7 +31,7 @@ check = lambda x: "положительное" if x > 0 else ("отрицате�
 result = [check(num) for num in numbers]
 print(result)
 
-#7 esep
+#1 esep
 def even_numbers(n):
     for i in range(2, n + 1, 2):
         if i % 4 == 0:
@@ -41,7 +41,7 @@ def even_numbers(n):
 for x in even_numbers(10):
     print(x)
 
-#8 esep
+#2 esep
 def filter_words(words):
     for w in words:
         if len(w) > 4:
@@ -53,7 +53,7 @@ words = ["кот", "машина", "арбуз", "дом"]
 for w in filter_words(words):
     print(w)
 
-#9 esep
+#3 esep
 def infinite_numbers():
     num = 1
     while True:
@@ -70,7 +70,7 @@ gen = infinite_numbers()
 for _ in range(15):
     print(next(gen))
 
-#10 esep
+#4 esep
 def squares(n):
     for i in range(1, n + 1):
         sq = i ** 2
@@ -80,3 +80,8 @@ def squares(n):
             yield sq
 for x in squares(5):
     print(x)
+
+
+#1 esep
+result = [x**2 for x in range(1, 21) if x % 2 == 0]
+print(result)
