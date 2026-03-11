@@ -96,3 +96,8 @@ print(result)
 words = ["кот", "машина", "ананас", "дом"]
 filtered = [w for w in words if len(w) > 4 and 'а' not in w]
 print(filtered)
+
+#4 esep
+numbers = [1, 2, 3, 4, 5]
+result = {x: ("чётное" if x % 2 == 0 else "нечётное") for x in numbers}
+print(result)
