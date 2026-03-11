@@ -4,3 +4,8 @@ print(check(5))
 print(check(-3))
 print(check(0))
 
+#2 esep
+words = ["арбуз", "кот", "машина", "дом", "ананас"]
+sorted_words = sorted(words, key=lambda w: (len(w), w[0]))
+print(sorted_words)
+
