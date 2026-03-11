@@ -85,3 +85,14 @@ for x in squares(5):
 #1 esep
 result = [x**2 for x in range(1, 21) if x % 2 == 0]
 print(result)
+
+#2 esep
+from functools import reduce
+matrix = [[1,2,3], [4,5,6], [7,8,9]]
+result = [reduce(lambda a, b: a * b, row) for row in matrix]
+print(result)
+
+#3 esep
+words = ["кот", "машина", "ананас", "дом"]
+filtered = [w for w in words if len(w) > 4 and 'а' not in w]
+print(filtered)
