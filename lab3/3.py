@@ -206,3 +206,11 @@ print(result)
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 evens = list(filter(lambda x: x % 2 == 0, numbers))
 print(evens)
+
+#4 esep
+numbers = [0, 5, 12, 7, 20, -3, 8]
+result = list(map(
+    lambda x: x / 2 if x % 2 == 0 else x * 3,
+    filter(lambda x: x > 5, numbers)
+))
+print(result)
