@@ -24,3 +24,9 @@ compare = lambda a, b: "a больше" if a > b else ("b больше" if b > a
 print(compare(10, 7))
 print(compare(3, 5))
 print(compare(4, 4))
+
+#6 esep
+numbers = [0, -3, 5, -7, 8]
+check = lambda x: "положительное" if x > 0 else ("отрицательное" if x < 0 else "ноль")
+result = [check(num) for num in numbers]
+print(result)
