@@ -161,3 +161,15 @@ def process_numbers(numbers):
 numbers = [5, -2, 8, 0, -7, 3]
 for x in process_numbers(numbers):
     print(x)
+
+#4 esep
+students = [("Иван", 85), ("Анна", 72), ("Пётр", 90), ("Мария", 60)]
+get_grade = lambda score: (
+    "Отлично" if score >= 90 else
+    "Хорошо" if score >= 70 else
+    "Удовлетворительно"
+)
+result = {name: get_grade(score) for name, score in students}
+print(result)
+
+#5 esep
