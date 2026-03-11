@@ -41,3 +41,31 @@ def even_numbers(n):
 for x in even_numbers(10):
     print(x)
 
+#8 esep
+def filter_words(words):
+    for w in words:
+        if len(w) > 4:
+            if 'а' in w:
+                yield "с а"
+            else:
+                yield w
+words = ["кот", "машина", "арбуз", "дом"]
+for w in filter_words(words):
+    print(w)
+
+#9 esep
+def infinite_numbers():
+    num = 1
+    while True:
+        if num % 3 == 0 and num % 5 == 0:
+            yield "FizzBuzz"
+        elif num % 3 == 0:
+            yield "Fizz"
+        elif num % 5 == 0:
+            yield "Buzz"
+        else:
+            yield num
+        num += 1
+gen = infinite_numbers()
+for _ in range(15):
+    print(next(gen))
