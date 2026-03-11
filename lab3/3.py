@@ -116,3 +116,38 @@ result = [
     for x in range(1, 21)
 ]
 print(result)
+
+#1 esep
+def is_prime(x):
+    if x < 2:
+        return False
+    for i in range(2, int(x**0.5) + 1):
+        if x % i == 0:
+            return False
+    return True
+def special_numbers(n):
+    for i in range(1, n + 1):
+        if i % 3 == 0 and i % 5 == 0:
+            yield "FizzBuzz"
+        elif i % 3 == 0:
+            yield "Fizz"
+        elif i % 5 == 0:
+            yield "Buzz"
+        elif is_prime(i):
+            yield "простое"
+        else:
+            yield i
+for x in special_numbers(15):
+    print(x)
+
+#2 esep
+words = ["кот", "машина", "арбуз", "дом", "ананас"]
+result = [
+    (lambda w:
+        w.upper() + "*" if len(w) > 4 and 'а' in w else
+        "short" if len(w) <= 4 else
+        w.upper()
+    )(word)
+    for word in words
+]
+print(result)
