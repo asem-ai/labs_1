@@ -106,3 +106,13 @@ print(result)
 matrix = [[1,2], [3,4], [5,6]]
 flat = [num for row in matrix for num in row]
 print(flat)
+
+#6 esep
+result = [
+    "FizzBuzz" if x % 3 == 0 and x % 5 == 0
+    else "Fizz" if x % 3 == 0
+    else "Buzz" if x % 5 == 0
+    else x
+    for x in range(1, 21)
+]
+print(result)
