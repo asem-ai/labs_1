@@ -18,3 +18,9 @@ print(filtered)
 numbers = [1, 2, 3, 4, 5, 6]
 mapped = list(map(lambda x: x**2 if x % 2 == 0 else x * 3, numbers))
 print(mapped)
+
+#5 esep
+compare = lambda a, b: "a больше" if a > b else ("b больше" if b > a else "равны")
+print(compare(10, 7))
+print(compare(3, 5))
+print(compare(4, 4))
