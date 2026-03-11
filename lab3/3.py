@@ -173,3 +173,21 @@ result = {name: get_grade(score) for name, score in students}
 print(result)
 
 #5 esep
+def matrix_transform(matrix):
+    flattened = [num for row in matrix for num in row]
+    for num in flattened:
+        if num % 6 == 0:
+            yield "кратно 6"
+        elif num % 2 == 0:
+            yield "чётное"
+        elif num % 3 == 0:
+            yield "кратно 3"
+        else:
+            yield num
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+for x in matrix_transform(matrix):
+    print(x)
