@@ -1,0 +1,5 @@
+Unique users: 3
+Total Buys: 470
+Total Sum: 470
+User spending: 2
+average buys: 235.0
