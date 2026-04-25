@@ -143,3 +143,14 @@ plt.xticks(rotation=45, ha='right')
 plt.grid(True, alpha=0.3, axis='y')
 plt.tight_layout()
 plt.show()
+
+#12 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7']].dropna()
+sns.pairplot(df_clean, vars=['col_2', 'col_3', 'col_4', 'col_5', 'col_6'],
+             hue='col_7', diag_kind='hist', plot_kws={'alpha':0.6})
+plt.suptitle('Парные диаграммы для числовых колонок с разделением по категориям',
+             y=1.02, fontsize=14)
+plt.show()
