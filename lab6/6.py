@@ -87,3 +87,14 @@ print(f"Порог (среднее + 3σ): {threshold:.2f}")
 print(f"\nКоличество аномальных товаров: {len(anomalies)}")
 print("\nПервые 5 строк аномальных товаров:")
 print(anomalies[['col_2']].head())
+
+#8 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+numeric_cols = ['col_2', 'col_3', 'col_4', 'col_5', 'col_6',
+                'col_7', 'col_8', 'col_9', 'col_10', 'col_11']
+correlation_matrix = df[numeric_cols].corr()
+corr_df = pd.DataFrame(correlation_matrix)
+print("Корреляционная матрица для колонок col_2 - col_11:")
+print(corr_df)
