@@ -174,3 +174,18 @@ sns.heatmap(corr_matrix,
 plt.title('Тепловая карта корреляции числовых характеристик товаров', fontsize=14, pad=20)
 plt.tight_layout()
 plt.show()
+
+#14 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df['total_value'] = df['col_2'] * df['col_3']
+df['double_stock'] = df['col_4'] * 2
+df['log_price'] = np.log(df['col_2'])
+columns_to_save = list(df.columns)
+df.to_excel('catalog_analysis.xlsx', index=False)
+print("Файл успешно сохранен как 'catalog_analysis.xlsx'")
+print(f"Размер сохраненного DataFrame: {df.shape}")
+print(f"Количество колонок: {len(df.columns)}")
+print("\nСписок всех колонок в сохраненном файле:")
+print(df.columns.tolist())
