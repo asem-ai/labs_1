@@ -715,3 +715,44 @@ print("\nСтатистика по числовым колонкам:")
 print(df_plot[['Цена', 'Запас', 'Продажи', 'Рейтинг', 'Скидка']].describe())
 print("\nКорреляционная матрица:")
 print(df_plot[['Цена', 'Запас', 'Продажи', 'Рейтинг', 'Скидка']].corr())
+
+#34 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+mean_price = df['col_2'].mean()
+std_price = df['col_2'].std()
+mean_stock = df['col_3'].mean()
+std_stock = df['col_3'].std()
+threshold_price = mean_price + 3 * std_price
+threshold_stock = mean_stock + 3 * std_stock
+extreme_items = df[(df['col_2'] > threshold_price) | (df['col_3'] > threshold_stock)]
+print(f"Аномальных товаров: {len(extreme_items)}")
+print(extreme_items[['col_1', 'col_2', 'col_3', 'col_7']].head(10))
+
+#35 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+if 'col_7' not in df.columns:
+    print("Қате: 'col_7' бағаны жоқ!")
+    print("Бар бағандар:", df.columns.tolist())
+    exit()
+if df['col_7'].isnull().all():
+    print("Қате: 'col_7' бағанында барлық мәндер NaN!")
+    exit()
+df['total_value'] = df['col_2'] * df['col_3']
+category_total = df.groupby('col_7')['total_value'].sum().reset_index()
+category_total = category_total.dropna()
+if len(category_total) > 0:
+    category_total = category_total.sort_values('total_value', ascending=False)
+    print("ЕҢ ҮЛКЕН КАТЕГОРИЯ:", category_total.iloc[0]['col_7'])
+    print("ҚҰНЫ:", category_total.iloc[0]['total_value'])
+    plt.figure(figsize=(10, 6))
+    sns.barplot(data=category_total, x='col_7', y='total_value', hue='col_7', legend=False)
+    plt.xticks(rotation=45)
+    plt.title('Категориялар бойынша жалпы құн')
+    plt.tight_layout()
+    plt.show()
+else:
+    print("Категория бойынша деректер жоқ!")
