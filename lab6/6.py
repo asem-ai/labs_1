@@ -423,3 +423,87 @@ for i, row in top_10_stock.iterrows():
 plt.grid(True, alpha=0.3, axis='x')
 plt.tight_layout()
 plt.show()
+
+#25 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_7', 'col_2']].dropna()
+def price_range(price):
+    if price <= 50:
+        return 'до 50'
+    elif price <= 200:
+        return '50-200'
+    elif price <= 500:
+        return '200-500'
+    elif price <= 1000:
+        return '500-1000'
+    else:
+        return '>1000'
+df_clean['price_range'] = df_clean['col_2'].apply(price_range)
+order = ['до 50', '50-200', '200-500', '500-1000', '>1000']
+df_clean['price_range'] = pd.Categorical(df_clean['price_range'], categories=order, ordered=True)
+pivot_table = pd.pivot_table(
+    df_clean,
+    values='col_2',
+    index='col_7',
+    columns='price_range',
+    aggfunc='count',
+    fill_value=0
+)
+pivot_table.index.name = 'category'
+print("Сводная таблица: распределение товаров по категориям и ценовым диапазонам")
+print(pivot_table)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(12, 8))
+sns.heatmap(
+    pivot_table,
+    annot=True,
+    fmt='d',
+    cmap='YlOrRd',
+    linewidths=0.5,
+    cbar_kws={'label': 'Количество товаров'}
+)
+plt.title('Тепловая карта: Распределение товаров по категориям и ценовым диапазонам', fontsize=14)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+#26 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+category_stats = df.groupby('col_7').agg(
+    mean_price=('col_2', 'mean'),
+    mean_quantity=('col_3', 'mean')
+).reset_index()
+category_stats = category_stats.rename(columns={'col_7': 'category'})
+category_stats = category_stats.dropna()
+print("Средняя цена и средний запас по категориям:")
+print(category_stats)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(10, 8))
+scatter = sns.scatterplot(
+    data=category_stats,
+    x='mean_price',
+    y='mean_quantity',
+    hue='category',
+    s=250,
+    palette='Set2'
+)
+for i, row in category_stats.iterrows():
+    plt.annotate(
+        row['category'],
+        (row['mean_price'], row['mean_quantity']),
+        xytext=(8, 8),
+        textcoords='offset points',
+        fontsize=10,
+        fontweight='bold'
+    )
+plt.title('Сравнение категорий по средней цене и среднему запасу', fontsize=14)
+plt.xlabel('Средняя цена', fontsize=12)
+plt.ylabel('Средний запас', fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.legend(title='Категория', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
