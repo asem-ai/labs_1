@@ -43,3 +43,15 @@ for col in df.columns:
     df[col] = pd.to_numeric(df[col], errors='coerce')
 electronics_expensive = df[(df['col_2'] > 500) & (df['col_7'] == "Electronics")]
 print(electronics_expensive.head())
+
+#5 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+grouped = df.groupby('col_7').agg(
+    mean_price=('col_2', 'mean'),
+    max_price=('col_2', 'max'),
+    total_quantity=('col_3', 'sum')
+).reset_index()
+grouped = grouped.rename(columns={'col_7': 'category'})
+print(grouped)
