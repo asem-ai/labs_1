@@ -537,3 +537,13 @@ for i, row in category_std_sorted.iterrows():
 plt.grid(True, alpha=0.3, axis='x')
 plt.tight_layout()
 plt.show()
+
+#28 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+zero_stock = df[df['col_3'] == 0]
+zero_stock_products = zero_stock[['col_1', 'col_7', 'col_2']].dropna()
+print("Товары с нулевым запасом (первые 10):")
+print(zero_stock_products.head(10))
+print(f"\nВсего товаров с нулевым запасом: {len(zero_stock_products)}")
