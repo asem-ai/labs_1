@@ -272,3 +272,97 @@ for i, row in price_counts.iterrows():
 plt.grid(True, alpha=0.3, axis='y')
 plt.tight_layout()
 plt.show()
+
+#19 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df['total_value'] = df['col_2'] * df['col_3']
+category_value = df.groupby('col_7')['total_value'].sum().reset_index()
+category_value.columns = ['category', 'total_stock_value']
+category_value_sorted = category_value.sort_values('total_stock_value', ascending=False)
+top_category = category_value_sorted.iloc[0]
+print("Категория с наибольшей суммарной стоимостью на складе:")
+print(f"Категория: {top_category['category']}")
+print(f"Суммарная стоимость: {top_category['total_stock_value']:.2f}")
+print("\n" + "="*50 + "\n")
+
+#20 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+category_stats = df.groupby('col_7').agg(
+    mean_price=('col_2', 'mean'),
+    mean_quantity=('col_3', 'mean')
+).reset_index()
+category_stats = category_stats.rename(columns={'col_7': 'category'})
+category_stats = category_stats.dropna()
+print("Средняя цена и средний запас по категориям:")
+print(category_stats)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(10, 8))
+sns.scatterplot(
+    data=category_stats,
+    x='mean_price',
+    y='mean_quantity',
+    hue='category',
+    s=200,
+    palette='Set1'
+)
+for i, row in category_stats.iterrows():
+    plt.annotate(
+        row['category'],
+        (row['mean_price'], row['mean_quantity']),
+        xytext=(5, 5),
+        textcoords='offset points',
+        fontsize=10,
+        fontweight='bold'
+    )
+plt.title('Средняя цена vs Средний запас по категориям', fontsize=14)
+plt.xlabel('Средняя цена', fontsize=12)
+plt.ylabel('Средний запас (количество)', fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.legend(title='Категория', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
+#21 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+category_std = df.groupby('col_7')['col_2'].std().reset_index()
+category_std.columns = ['category', 'std_price']
+category_std = category_std.dropna()
+category_std = category_std.sort_values('std_price', ascending=True)
+print("Стандартное отклонение цены по категориям:")
+print(category_std.sort_values('std_price', ascending=False))
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(10, 8))
+sns.barplot(
+    data=category_std,
+    y='category',
+    x='std_price',
+    hue='category',
+    palette='RdYlGn_r',
+    legend=False
+)
+plt.title('Стандартное отклонение цены по категориям', fontsize=14)
+plt.xlabel('Стандартное отклонение цены', fontsize=12)
+plt.ylabel('Категория', fontsize=12)
+for i, row in category_std.iterrows():
+    plt.text(row['std_price'] + 5, i, f"{row['std_price']:.2f}",
+             va='center', fontsize=9)
+plt.grid(True, alpha=0.3, axis='x')
+plt.tight_layout()
+plt.show()
+
+#22 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+zero_stock = df[df['col_3'] == 0]
+zero_stock_products = zero_stock[['col_1', 'col_7', 'col_2']].dropna()
+print("Товары с нулевым запасом (первые 10):")
+print(zero_stock_products.head(10))
+print(f"\nВсего товаров с нулевым запасом: {len(zero_stock_products)}")
+
