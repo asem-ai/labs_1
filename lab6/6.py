@@ -507,3 +507,33 @@ plt.grid(True, alpha=0.3)
 plt.legend(title='Категория', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
+
+#27 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+category_std = df.groupby('col_7')['col_2'].std().reset_index()
+category_std.columns = ['category', 'std_price']
+category_std = category_std.dropna()
+category_std_sorted = category_std.sort_values('std_price', ascending=False)
+print("Стандартное отклонение цены по категориям:")
+print(category_std_sorted)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(10, 8))
+sns.barplot(
+    data=category_std_sorted,
+    y='category',
+    x='std_price',
+    hue='category',
+    palette='RdYlGn_r',
+    legend=False
+)
+plt.title('Стандартное отклонение цены по категориям', fontsize=14)
+plt.xlabel('Стандартное отклонение цены', fontsize=12)
+plt.ylabel('Категория', fontsize=12)
+for i, row in category_std_sorted.iterrows():
+    plt.text(row['std_price'] + 5, i, f"{row['std_price']:.2f}",
+             va='center', fontsize=9)
+plt.grid(True, alpha=0.3, axis='x')
+plt.tight_layout()
+plt.show()
