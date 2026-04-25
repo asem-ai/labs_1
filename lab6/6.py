@@ -8,3 +8,19 @@ print("\nПропусктер саны:")
 print(df.isnull().sum())
 print("\nАлғашқы 5 жол:")
 print(df.head())
+
+#2 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+numeric_cols = df.columns[df.isnull().sum() < len(df)].tolist()
+for col in numeric_cols:
+    if df[col].isnull().sum() > 0:
+        mean_val = df[col].mean()
+        df[col].fillna(mean_val, inplace=True)
+print("Проверка пропусков в числовых колонках:")
+for col in numeric_cols:
+    missing = df[col].isnull().sum()
+    print(f"{col}: {missing} пропусков")
+print("\nПервые 5 строк числовых колонок:")
+print(df[numeric_cols].head())
