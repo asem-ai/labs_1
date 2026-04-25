@@ -547,3 +547,61 @@ zero_stock_products = zero_stock[['col_1', 'col_7', 'col_2']].dropna()
 print("Товары с нулевым запасом (первые 10):")
 print(zero_stock_products.head(10))
 print(f"\nВсего товаров с нулевым запасом: {len(zero_stock_products)}")
+
+#29 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+category_count = df.groupby('col_7').size().reset_index(name='count')
+category_count = category_count.rename(columns={'col_7': 'category'})
+category_count = category_count.dropna()
+top_5_categories = category_count.sort_values('count', ascending=False).head(5)
+print("Топ-5 категорий по количеству товаров:")
+print(top_5_categories)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(10, 6))
+sns.barplot(
+    data=top_5_categories,
+    x='category',
+    y='count',
+    hue='category',
+    palette='viridis',
+    legend=False
+)
+plt.title('Топ-5 категорий по количеству товаров', fontsize=14)
+plt.xlabel('Категория', fontsize=12)
+plt.ylabel('Количество товаров', fontsize=12)
+for i, row in top_5_categories.iterrows():
+    plt.text(i, row['count'] + 50, str(row['count']), ha='center', fontsize=10)
+plt.grid(True, alpha=0.3, axis='y')
+plt.tight_layout()
+plt.show()
+
+#30 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_sorted = df.sort_values('col_3', ascending=False)
+top_10_stock = df_sorted[['col_1', 'col_3']].head(10)
+top_10_stock = top_10_stock.dropna()
+print("Топ-10 товаров по количеству на складе:")
+print(top_10_stock)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(12, 8))
+sns.barplot(
+    data=top_10_stock,
+    y='col_1',
+    x='col_3',
+    hue='col_1',
+    palette='Blues_d',
+    legend=False
+)
+plt.title('Топ-10 товаров по количеству на складе', fontsize=14)
+plt.xlabel('Количество на складе', fontsize=12)
+plt.ylabel('Название товара', fontsize=12)
+for i, row in top_10_stock.iterrows():
+    plt.text(row['col_3'] + 5, i, str(int(row['col_3'])),
+             va='center', fontsize=9)
+plt.grid(True, alpha=0.3, axis='x')
+plt.tight_layout()
+plt.show()
