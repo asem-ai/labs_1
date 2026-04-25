@@ -316,3 +316,97 @@ print(w._hp)
 print(m.inventory.get_items()[0])
 if __name__ == '__main__':
     app.run(port=5001)
+
+#16
+    @property
+    def hp(self):
+        return self._hp
+    @hp.setter
+    def hp(self, value):
+        self._hp = max(0, value)
+    @property
+    def inventory(self):
+        return self._inventory
+
+#17
+    def _del_(self):
+        print(f"Player {self.name} удалён")
+class Event:
+    def _init_(self, event_type, data):
+        self.type = event_type
+        self.data = data
+        self.timestamp = datetime.now()
+
+    def _str_(self):
+        return f"Event({self.type}, {self.data}, {self.timestamp})"
+class Logger:
+    def log(self, event, player, filename):
+        with open(filename, "a", encoding="utf-8") as f:
+            f.write(f"{event.timestamp};{player._id};{event.type};{event.data}\n")
+    def read_logs(self, filename):
+        events = []
+        with open(filename, "r", encoding="utf-8") as f:
+            for line in f:
+                t, pid, etype, data = line.strip().split(";")
+                events.append(Event(etype, eval(data)))
+        return events
+
+#18
+    def _iter_(self):
+        return iter(self._items)
+    def add_item(self, item):
+        self._items.append(item)
+    def get_items(self):
+        return self._items
+    def strong_items(self, min_power=30):
+        # comprehension
+        return [i for i in self._items if i.power >= min_power]
+class Player:
+    def _init_(self, _id, name, hp):
+        self._id = _id
+        self.name = name
+        self._hp = hp
+        self._inventory = Inventory()
+
+#19
+def analyze_inventory(inventories):
+    all_items = []
+    for inv in inventories:
+        all_items.extend(inv.get_items())
+    unique_items = {i.name for i in all_items}
+    top_power = max(all_items, key=lambda x: x.power) if all_items else None
+    return {
+        "unique_items": unique_items,
+        "top_power": str(top_power)
+    }
+@app.route('/')
+def home():
+    return "Server OK (Tasks 16-20 running)"
+#20
+@app.route('/simulate')
+def simulate():
+    p1 = Player(1, "Aiganym", 100)
+    p2 = Player(2, "Akzhan", 100)
+    sword = Item(1, "Sword", 50)
+    shield = Item(2, "Shield", 20)
+    p1.inventory.add_item(sword)
+    p2.inventory.add_item(shield)
+    e1 = Event("ATTACK", {"damage": 30, "player_id": 1})
+    e2 = Event("ATTACK", {"damage": 60, "player_id": 2})
+    p1.hp -= e1.data["damage"]
+    p2.hp -= e2.data["damage"]
+    logger = Logger()
+    logger.log(e1, p1, "log.txt")
+    logger.log(e2, p2, "log.txt")
+    logs = logger.read_logs("log.txt")
+    analysis = analyze_inventory([p1.inventory, p2.inventory])
+    return f"""
+    <h3>Simulation Done</h3>
+    <p>Player1 HP: {p1.hp}</p>
+    <p>Player2 HP: {p2.hp}</p>
+    <p>Logs count: {len(logs)}</p>
+    <p>Unique items: {analysis['unique_items']}</p>
+    <p>Top item: {analysis['top_power']}</p>
+    """
+if _name_ == '_main_':
+    app.run(port=5001)
