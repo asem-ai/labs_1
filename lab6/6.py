@@ -189,3 +189,34 @@ print(f"Размер сохраненного DataFrame: {df.shape}")
 print(f"Количество колонок: {len(df.columns)}")
 print("\nСписок всех колонок в сохраненном файле:")
 print(df.columns.tolist())
+
+#15 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df['log_price'] = np.log(df['col_2'])
+category_summary = df.groupby('col_7').agg(
+    count=('col_2', 'count'),
+    mean_price=('col_2', 'mean'),
+    total_quantity=('col_3', 'sum'),
+    mean_log_price=('log_price', 'mean')
+).reset_index()
+category_summary = category_summary.rename(columns={'col_7': 'category'})
+print("Финальный агрегированный отчет по категориям:")
+print(category_summary)
+
+#16 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+idx = df.groupby('col_7')['col_2'].idxmax()
+most_expensive = df.loc[idx, ['col_1', 'col_2', 'col_7']]
+most_expensive = most_expensive.reset_index(drop=True)
+most_expensive = most_expensive.rename(columns={
+    'col_1': 'товар',
+    'col_2': 'цена',
+    'col_7': 'категория'
+})
+print("Самые дорогие товары в каждой категории:")
+print(most_expensive)
+most_expensive.to_excel('most_expensive_products.xlsx', index=False)
