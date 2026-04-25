@@ -680,3 +680,38 @@ plt.annotate(
 )
 plt.tight_layout()
 plt.show()
+
+#33 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_plot = df[['col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7']].copy()
+df_plot = df_plot.dropna()
+df_plot = df_plot.rename(columns={
+    'col_2': 'Цена',
+    'col_3': 'Запас',
+    'col_4': 'Продажи',
+    'col_5': 'Рейтинг',
+    'col_6': 'Скидка',
+    'col_7': 'Категория'
+})
+print("Данные для анализа:")
+print(df_plot.head())
+print(f"\nРазмер данных: {df_plot.shape}")
+print("\n" + "="*50 + "\n")
+pairplot = sns.pairplot(
+    df_plot,
+    vars=['Цена', 'Запас', 'Продажи', 'Рейтинг', 'Скидка'],
+    hue='Категория',
+    diag_kind='hist',
+    plot_kws={'alpha': 0.6, 's': 30},
+    palette='Set2'
+)
+pairplot.fig.suptitle('Парные диаграммы числовых характеристик товаров',
+                       y=1.02, fontsize=14)
+plt.tight_layout()
+plt.show()
+print("\nСтатистика по числовым колонкам:")
+print(df_plot[['Цена', 'Запас', 'Продажи', 'Рейтинг', 'Скидка']].describe())
+print("\nКорреляционная матрица:")
+print(df_plot[['Цена', 'Запас', 'Продажи', 'Рейтинг', 'Скидка']].corr())
