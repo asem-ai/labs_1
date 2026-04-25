@@ -396,3 +396,30 @@ plt.tight_layout()
 plt.show()
 
 #24 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_sorted = df.sort_values('col_3', ascending=False)
+top_10_stock = df_sorted[['col_1', 'col_3']].head(10)
+top_10_stock = top_10_stock.dropna()
+print("Топ-10 товаров по количеству на складе:")
+print(top_10_stock)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(12, 8))
+sns.barplot(
+    data=top_10_stock,
+    y='col_1',
+    x='col_3',
+    hue='col_1',
+    palette='Blues_d',
+    legend=False
+)
+plt.title('Топ-10 товаров по количеству на складе', fontsize=14)
+plt.xlabel('Количество на складе', fontsize=12)
+plt.ylabel('Название товара', fontsize=12)
+for i, row in top_10_stock.iterrows():
+    plt.text(row['col_3'] + 5, i, str(int(row['col_3'])),
+             va='center', fontsize=9)
+plt.grid(True, alpha=0.3, axis='x')
+plt.tight_layout()
+plt.show()
