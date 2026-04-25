@@ -98,3 +98,16 @@ correlation_matrix = df[numeric_cols].corr()
 corr_df = pd.DataFrame(correlation_matrix)
 print("Корреляционная матрица для колонок col_2 - col_11:")
 print(corr_df)
+
+#9 task
+import matplotlib.pyplot as plt
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+plt.figure(figsize=(10, 6))
+plt.hist(df['col_2'].dropna(), bins=50, edgecolor='black', alpha=0.7)
+plt.title('Распределение цен товаров', fontsize=14)
+plt.xlabel('Цена товара', fontsize=12)
+plt.ylabel('Количество товаров', fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.show()
