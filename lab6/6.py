@@ -220,3 +220,20 @@ most_expensive = most_expensive.rename(columns={
 print("Самые дорогие товары в каждой категории:")
 print(most_expensive)
 most_expensive.to_excel('most_expensive_products.xlsx', index=False)
+
+#17 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df['total_value'] = df['col_2'] * df['col_3']
+df_sorted = df.sort_values('total_value', ascending=False)
+top_10 = df_sorted[['col_1', 'col_2', 'col_3', 'total_value']].head(10)
+top_10 = top_10.rename(columns={
+    'col_1': 'товар',
+    'col_2': 'цена',
+    'col_3': 'количество',
+    'total_value': 'общая_стоимость'
+})
+print("Топ-10 товаров по общей стоимости на складе:")
+print(top_10)
+top_10.to_excel('top_10_total_value.xlsx', index=False)
