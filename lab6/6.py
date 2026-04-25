@@ -55,3 +55,21 @@ grouped = df.groupby('col_7').agg(
 ).reset_index()
 grouped = grouped.rename(columns={'col_7': 'category'})
 print(grouped)
+
+#6 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+numeric_cols = ['col_2', 'col_3', 'col_4', 'col_5', 'col_6',
+                'col_7', 'col_8', 'col_9', 'col_10', 'col_11']
+stats = []
+for col in numeric_cols:
+    stats.append({
+        'column': col,
+        'mean': df[col].mean(),
+        'median': df[col].median(),
+        'std': df[col].std()
+    })
+stats_df = pd.DataFrame(stats)
+print(stats_df)
+
