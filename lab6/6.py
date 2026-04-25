@@ -130,3 +130,16 @@ correlation = df_clean['col_2'].corr(df_clean['col_3'])
 print(f"Коэффициент корреляции Пирсона: {correlation:.3f}")
 
 #11 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_7', 'col_2']].dropna()
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='col_7', y='col_2', data=df_clean)
+plt.title('Распределение цен по категориям товаров', fontsize=14)
+plt.xlabel('Категория товара', fontsize=12)
+plt.ylabel('Цена товара', fontsize=12)
+plt.xticks(rotation=45, ha='right')
+plt.grid(True, alpha=0.3, axis='y')
+plt.tight_layout()
+plt.show()
