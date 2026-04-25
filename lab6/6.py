@@ -111,3 +111,22 @@ plt.xlabel('Цена товара', fontsize=12)
 plt.ylabel('Количество товаров', fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.show()
+
+#10 task
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_2', 'col_3']].dropna()
+plt.figure(figsize=(10, 6))
+sns.regplot(x='col_2', y='col_3', data=df_clean, scatter_kws={'alpha':0.5}, line_kws={'color':'red'})
+plt.title('Зависимость между ценой и количеством на складе', fontsize=14)
+plt.xlabel('Цена товара (col_2)', fontsize=12)
+plt.ylabel('Количество на складе (col_3)', fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.show()
+correlation = df_clean['col_2'].corr(df_clean['col_3'])
+print(f"Коэффициент корреляции Пирсона: {correlation:.3f}")
+
+#11 task
