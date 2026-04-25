@@ -237,3 +237,38 @@ top_10 = top_10.rename(columns={
 print("Топ-10 товаров по общей стоимости на складе:")
 print(top_10)
 top_10.to_excel('top_10_total_value.xlsx', index=False)
+
+#18 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_2']].dropna()
+def price_range(price):
+    if price <= 50:
+        return 'до 50'
+    elif price <= 200:
+        return '50-200'
+    elif price <= 500:
+        return '200-500'
+    elif price <= 1000:
+        return '500-1000'
+    else:
+        return 'больше 1000'
+df_clean['price_range'] = df_clean['col_2'].apply(price_range)
+price_counts = df_clean['price_range'].value_counts().reset_index()
+price_counts.columns = ['price_range', 'count']
+order = ['до 50', '50-200', '200-500', '500-1000', 'больше 1000']
+price_counts['price_range'] = pd.Categorical(price_counts['price_range'], categories=order, ordered=True)
+price_counts = price_counts.sort_values('price_range')
+print("Распределение товаров по ценовым диапазонам:")
+print(price_counts)
+plt.figure(figsize=(10, 6))
+sns.barplot(x='price_range', y='count', data=price_counts, palette='Blues_d')
+plt.title('Распределение товаров по ценовым диапазонам', fontsize=14)
+plt.xlabel('Ценовой диапазон', fontsize=12)
+plt.ylabel('Количество товаров', fontsize=12)
+for i, row in price_counts.iterrows():
+    plt.text(i, row['count'] + 10, str(row['count']), ha='center', fontsize=10)
+plt.grid(True, alpha=0.3, axis='y')
+plt.tight_layout()
+plt.show()
