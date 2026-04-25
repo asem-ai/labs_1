@@ -73,3 +73,17 @@ for col in numeric_cols:
 stats_df = pd.DataFrame(stats)
 print(stats_df)
 
+#7 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+mean_price = df['col_2'].mean()
+std_price = df['col_2'].std()
+threshold = mean_price + 3 * std_price
+anomalies = df[df['col_2'] > threshold]
+print(f"Средняя цена: {mean_price:.2f}")
+print(f"Стандартное отклонение: {std_price:.2f}")
+print(f"Порог (среднее + 3σ): {threshold:.2f}")
+print(f"\nКоличество аномальных товаров: {len(anomalies)}")
+print("\nПервые 5 строк аномальных товаров:")
+print(anomalies[['col_2']].head())
