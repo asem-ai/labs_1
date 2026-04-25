@@ -154,3 +154,23 @@ sns.pairplot(df_clean, vars=['col_2', 'col_3', 'col_4', 'col_5', 'col_6'],
 plt.suptitle('Парные диаграммы для числовых колонок с разделением по категориям',
              y=1.02, fontsize=14)
 plt.show()
+
+#13 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+numeric_cols = ['col_2', 'col_3', 'col_4', 'col_5', 'col_6',
+                'col_7', 'col_8', 'col_9', 'col_10', 'col_11']
+corr_matrix = df[numeric_cols].corr()
+plt.figure(figsize=(12, 8))
+sns.heatmap(corr_matrix,
+            annot=True,
+            cmap='coolwarm',
+            center=0,
+            fmt='.2f',
+            square=True,
+            linewidths=0.5,
+            cbar_kws={'shrink': 0.8})
+plt.title('Тепловая карта корреляции числовых характеристик товаров', fontsize=14, pad=20)
+plt.tight_layout()
+plt.show()
