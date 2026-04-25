@@ -605,3 +605,48 @@ for i, row in top_10_stock.iterrows():
 plt.grid(True, alpha=0.3, axis='x')
 plt.tight_layout()
 plt.show()
+
+#31 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+df_clean = df[['col_7', 'col_2']].dropna()
+def price_range(price):
+    if price <= 50:
+        return 'до 50'
+    elif price <= 200:
+        return '50-200'
+    elif price <= 500:
+        return '200-500'
+    elif price <= 1000:
+        return '500-1000'
+    else:
+        return '>1000'
+df_clean['price_range'] = df_clean['col_2'].apply(price_range)
+order = ['до 50', '50-200', '200-500', '500-1000', '>1000']
+df_clean['price_range'] = pd.Categorical(df_clean['price_range'], categories=order, ordered=True)
+pivot_table = pd.pivot_table(
+    df_clean,
+    values='col_2',
+    index='col_7',
+    columns='price_range',
+    aggfunc='count',
+    fill_value=0
+)
+pivot_table.index.name = 'category'
+print("Сводная таблица: распределение товаров по категориям и ценовым диапазонам")
+print(pivot_table)
+print("\n" + "="*50 + "\n")
+plt.figure(figsize=(12, 8))
+sns.heatmap(
+    pivot_table,
+    annot=True,
+    fmt='d',
+    cmap='YlOrRd',
+    linewidths=0.5,
+    cbar_kws={'label': 'Количество товаров'}
+)
+plt.title('Тепловая карта: Распределение товаров по категориям и ценовым диапазонам', fontsize=14)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
