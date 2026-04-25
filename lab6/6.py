@@ -36,3 +36,10 @@ df['double_stock'] = df['col_4'] * 2
 df['log_price'] = np.log(df['col_2'])
 print("Новые колонки (первые 5 строк):")
 print(df[['col_2', 'col_3', 'col_4', 'total_value', 'double_stock', 'log_price']].head())
+
+#4 task
+df = pd.read_excel('catalog_products.xlsx')
+for col in df.columns:
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+electronics_expensive = df[(df['col_2'] > 500) & (df['col_7'] == "Electronics")]
+print(electronics_expensive.head())
